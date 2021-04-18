@@ -562,7 +562,7 @@ ______________________________________________________________________________
 
 # Congratulations!
 
-You should now have a working Arch Linux installation. It doesn't have a desktop environment or any applications yet... For that you can check out my Automatic-Arch-Installation repo, but the base installation is done.
+You should now have a working Arch Linux installation. It doesn't have a desktop environment or any applications yet ... For that you can check out my Automatic-Arch-Installation repo, but the base installation is done.
 
 First, exit chroot:
 
@@ -570,7 +570,7 @@ First, exit chroot:
 #   exit
 ```
 
-Now unmount and reboot
+Then unmount all devices and reboot
 
 ```
 #   umount -a

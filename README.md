@@ -193,10 +193,10 @@ ______________________________________________________________________________
 
 ## Create a Volume Group
 
-**Note:** I'm labelling my volume group as `main`. If you use something else, make sure to replace every instance of it, not only in this section, but also in the bootloader config section much later.
+**Note:** I'm labelling my volume group as `vg0`. If you use something else, make sure to replace every instance of it, not only in this section, but also in the bootloader config section much later.
 
 ```
-#   vgcreate main /dev/mapper/lvm
+#   vgcreate vg0 /dev/mapper/lvm
 ```
 
 ## Create the Logical Volumes
@@ -206,8 +206,8 @@ At minimum we need one volume, for root. Additionally we can put home on its own
 Also the `L` arguments below are case sensitive. The capital `L` is used when you want to specify a fixed size volume, the lowercase `l` lets you specify percentages.
 
 ```
-#   lvcreate -L 50GB -n lv_root main
-#   lvcreate -l 100%FREE -n lv_home main
+#   lvcreate -L 50GB -n lv_root vg0
+#   lvcreate -l 100%FREE -n lv_home vg0
 ```
 
 Now activate the volumegroup:
@@ -225,11 +225,11 @@ Note: The boot and EFI partitions are on non-LVM partitions, so use the disk nod
 
 #### lv_root
 ```
-#   mkfs.ext4 /dev/main/lv_root
+#   mkfs.ext4 /dev/vg0/lv_root
 ```
 #### lv_home
 ```
-#   mkfs.ext4 /dev/main/lv_home
+#   mkfs.ext4 /dev/vg0/lv_home
 ```
 #### Boot Partition
 ```
@@ -247,12 +247,12 @@ We need to create a couple directories while we're at it.
 
 #### Root Volume
 ```
-#   mount /dev/main/lv_root /mnt
+#   mount /dev/vg0/lv_root /mnt
 ```
 #### Home Volume
 ```
 #   mkdir /mnt/home
-#   mount /dev/main/lv_home /mnt/home
+#   mount /dev/vg0/lv_home /mnt/home
 ```
 #### Boot Partition
 ```
@@ -362,7 +362,7 @@ Scroll to the very top. It should look similar to this:
 
 Change it to this:
 
-`GRUB_CMDLINE_LINUX_DEFAULT="cryptdevice=/dev/sda3:main:allow-discards loglevel=3 quiet"`
+`GRUB_CMDLINE_LINUX_DEFAULT="cryptdevice=/dev/sda3:vg0:allow-discards loglevel=3 quiet"`
 
 Also uncomment:
 
